@@ -3,7 +3,7 @@ name: mlflow CI/CD pipeline
 on:
   push:
     branches:
-      - main
+      - main 
 
 jobs:
   build-and-deploy:
