@@ -1,0 +1,29 @@
+name: mlflow CI/CD pipeline 
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run MLflow training pipeline
+        run: python train.py
+
+      - name: Deploy MLflow model
+        run: |
+          mlflow models serve -m <MODEL_PATH> --host 0.0.0.0 --port 5000
